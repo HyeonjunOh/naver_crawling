@@ -1,10 +1,11 @@
-from urllib.request import urlopen
+# from urllib.request import urlopen
 from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
 import requests
+import re
 
 
-celebrities = ['류준열', '혜리', '이유비', '이동휘']
+celebrities = ['류준열', '혜리', '이유비', '이동휘', '이지은']
 
 for i in celebrities:
     baseUrl = 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='
@@ -16,13 +17,13 @@ for i in celebrities:
 
     profile = html.select("dl.detail_profile")
 
-    span = profile[0].select("dd > span")
-    #
-    print(span.get_text())
-    #
-    # birth = span[1].text
-    # height = span[2].text
-    # weight = span[3].text
+    birth = profile[0].find_all(text=re.compile("[0-9]*년 [0-9]*월 [0-9]*일"))
+    height = profile[0].find_all(text=re.compile("[0-9]*cm"))
+    weight = profile[0].find_all(text=re.compile("[0-9]*kg"))
+    print("이름 :", i)
+    print("출생 :", birth)
+    print("키 :", height)
+    print("몸무게 :", weight)
 
     a = profile[0].select('dd > a[href^="https://www.instagram.com/"]')[0].get('href')
     print(a)
