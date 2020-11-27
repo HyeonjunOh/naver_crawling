@@ -18,17 +18,19 @@ for i in celebrities:
     profile = html.select("dl.detail_profile")
 
     if len(profile) == 1:
-        birth = profile[0].find_all(text=re.compile("[0-9]*년 [0-9]*월 [0-9]*일"))
-        height = profile[0].find_all(text=re.compile("[0-9]*cm"))
-        weight = profile[0].find_all(text=re.compile("[0-9]*kg"))
-        print("이름 :", i)
-        print("출생 :", birth)
-        print("키 :", height)
-        print("몸무게 :", weight)
 
         a = profile[0].select('dd > a[href^="https://www.instagram.com/"]')
         if len(a) == 1:
-            print(a[0].get('href'))
+            insta_url = a[0].get('href')
+            birth = profile[0].find_all(text=re.compile("[0-9]*년 [0-9]*월 [0-9]*일"))
+            height = profile[0].find_all(text=re.compile("[0-9]*cm"))
+            weight = profile[0].find_all(text=re.compile("[0-9]*kg"))
+            print("이름 :", i)
+            print(insta_url)
+            #print("출생 :", birth)
+            #print("키 :", height)
+            #print("몸무게 :", weight)
+
     else:
         continue
 
